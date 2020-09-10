@@ -17,12 +17,12 @@ export default {
   head: {
     title: process.env.npm_package_name || '',
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      {charset: 'utf-8'},
+      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+      {hid: 'description', name: 'description', content: process.env.npm_package_description || ''}
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
     ]
   },
   /*
@@ -35,6 +35,8 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
+    {src: '~/plugins/jquery.js', mode: 'client'},
+    {src: '~/assets/semantic/build/semantic.min.js', mode: 'client'}
   ],
   /*
   ** Auto import components
@@ -64,5 +66,20 @@ export default {
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
+    publicPath: '/nuxt/',
+    extend(config, ctx) {
+      return Object.assign({}, config, {
+        devtool: 'source-map'
+      });
+
+    },
+    render: {
+      static: {
+        maxAge: 30 * 24 * 60 * 60 * 1000
+      },
+      compressor: {
+        threshold: 0
+      }
+    }
   }
 }
